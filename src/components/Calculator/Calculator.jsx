@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../Calculator/Calculator.css'
 
 class Calculator extends Component {
   state = {
