@@ -60,3 +60,51 @@ describe('mounted Calculator', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('updateDisplay', () => {
+  let wrapper;
+
+  beforeEach(() => wrapper = shallow(<Calculator />));
+
+  it('updates displayValue', () => {
+    wrapper.instance().updateDisplay('5');
+    expect(wrapper.state('displayValue')).toEqual('5');
+  });
+
+  it('concatenates displayValue', () => {
+    wrapper.instance().updateDisplay('5');
+    wrapper.instance().updateDisplay('0');
+    expect(wrapper.state('displayValue')).toEqual('50');
+  });
+
+  it('remove leading "0" from displayValue', () => {
+    wrapper.instance().updateDisplay('0');
+    expect(wrapper.state('displayValue')).toEqual('0');
+    wrapper.instance().updateDisplay('5');
+    expect(wrapper.state('displayValue')).toEqual('5');
+  });
+
+  it('prevents multiple leading "0"s from displayValue', () => {
+    wrapper.instance().updateDisplay('0');
+    wrapper.instance().updateDisplay('0');
+    expect(wrapper.state('displayValue')).toEqual('0');
+  });
+
+  it('removes last char of displayValue', () => {
+    wrapper.instance().updateDisplay('5');
+    wrapper.instance().updateDisplay('0');
+    wrapper.instance().updateDisplay('ce');
+    expect(wrapper.state('displayValue')).toEqual('5')
+  });
+
+  it('prevents multiple instance of "." in displayValue', () => {
+    wrapper.instance().updateDisplay('.');
+    wrapper.instance().updateDisplay('.');
+    expect(wrapper.state('displayValue')).toEqual('.');
+  });
+
+  it('will set displayValue to "0" if displayValue is equal to an empty string', () => {
+    wrapper.instance().updateDisplay('ce');
+    expect(wrapper.state('displayValue')).toEqual('0')
+  });
+});
