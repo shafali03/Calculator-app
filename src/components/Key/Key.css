@@ -39,7 +39,7 @@
 
 .number-key {
   background-color: var(--number-key-color);
-  width: cal(100%/3);
+  width: calc(100%/3);
 }
 
 .number-key:hover {
@@ -49,7 +49,7 @@
 .submit-key {
   background-color: var(--submit-key-color);
   height: 100%;
-  width: 100;
+  width: 100%;
 }
 
 .submit-key:hover {
