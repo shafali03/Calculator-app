@@ -9,6 +9,7 @@ exports[`Calculator should render correctly 1`] = `
   />
   <Keypad
     callOperator={[Function]}
+    handleKeyPress={[Function]}
     numbers={
       Array [
         "9",

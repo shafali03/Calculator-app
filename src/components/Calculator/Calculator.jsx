@@ -12,24 +12,75 @@ class Calculator extends Component {
     storedValue: '',
   }
 
+  componentWillMount = () => {
+    document.addEventListener('keydown', this.handleKeyPress);
+  };
+
+  componentWillUnmount = () => {
+    document.removeEventListener('keydown', this.handleKeyPress);
+  };
+
   callOperator = () => {
-    console.log('call operation');
+    let { displayValue, selectedOperator, storedValue } = this.state;
+    // temp variable for updating state storedValue
+    const updateStoredValue = displayValue;
+
+    // parse strings for operations
+    displayValue = parseInt(displayValue, 10);
+    storedValue = parseInt(storedValue, 10);
+
+    // performs selected operation
+    switch (selectedOperator) {
+      case '+':
+        displayValue = storedValue + displayValue;
+        break;
+      case '-':
+        displayValue = storedValue - displayValue;
+        break;
+      case 'x':
+        displayValue = storedValue * displayValue;
+        break;
+      case '/':
+        displayValue = storedValue / displayValue;
+        break;
+      default:
+
+        displayValue = '0';
+    }
+
+
+    displayValue = displayValue.toString();
+
+    selectedOperator = '';
+
+    if (displayValue === 'NaN' || displayValue === 'Infinity') displayValue = '0';
+
+    this.setState({ displayValue, selectedOperator, storedValue: updateStoredValue });
+  }
+
+  handleKeyPress = event => {
+    const { numbers, operators } = this.state;
+
+    if (event.key === 'Backspace') this.updateDisplay('ce');
+    if (event.key === 'Enter' || event.key === '=') this.callOperator();
+
+    numbers.forEach(number => {
+      if (event.key === number) this.updateDisplay(number)
+    });
+
+    operators.forEach(operator => {
+      if (event.key === operator) this.setOperator(operator);
+    })
   }
 
   setOperator = (value) => {
     let { displayValue, selectedOperator, storedValue } = this.state;
 
-    // check if a value is already present for selectedOperator
     if (selectedOperator === '') {
-      // update storeValue to the value of displayValue
       storedValue = displayValue;
-      // rest of the value display to '0'
       displayValue = '0';
-      // update the value of selectedOperator to the given value
       selectedOperator = value;
     } else {
-      // if selectedOperator is not an empty string
-      // Update the value of selectedOperator to the given value
       selectedOperator = value;
     }
     this.setState({ displayValue, selectedOperator, storedValue });
@@ -38,17 +89,16 @@ class Calculator extends Component {
   updateDisplay = (value) => {
     let { displayValue } = this.state;
 
-    // prevent multiple occurrences of '.'
+
     if (value === '.' && displayValue.includes('.')) value = '';
 
     if (value === 'ce') {
-      // deletes last char in displayValue
+
       displayValue = displayValue.substr(0, displayValue.length - 1);
-      // set displayValue to '0 if displayValue is empty string
+
       if (displayValue === '') displayValue = '0';
     } else {
-      // replace displayValue with value if displayValue equal to '0'
-      // else concatenate displayValue and value
+
       displayValue === '0' ? displayValue = value : displayValue += value;
     }
     this.setState({ displayValue })
@@ -61,6 +111,7 @@ class Calculator extends Component {
       <div className="calculator-container">
         <Display displayValue={displayValue} />
         <Keypad
+          handleKeyPress={this.handleKeyPress}
           callOperator={this.callOperator}
           numbers={numbers}
           operators={operators}
