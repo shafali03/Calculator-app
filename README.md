@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/shafali03/Calculator-app/tree/master.svg?style=shield)](https://circleci.com/gh/shafali03/Calculator-app/tree/master)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
