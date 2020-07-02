@@ -48,5 +48,17 @@
     "coverageReporters": [
       "text"
     ]
-  }
+  },
+  "description": "[![CircleCI](https://circleci.com/gh/shafali03/Calculator-app/tree/master.svg?style=shield)](https://circleci.com/gh/shafali03/Calculator-app/tree/master)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shafali03/Calculator-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shafali03/Calculator-app/issues"
+  },
+  "homepage": "https://github.com/shafali03/Calculator-app#readme"
 }
